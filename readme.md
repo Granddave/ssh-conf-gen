@@ -1,6 +1,6 @@
-# ssh-conf-gen
+# ssh_conf_gen
 
-An ssh config generator
+An ssh config generator.
 
-See hosts.txt for example hosts. Formatting: `host, hostname, ssh_port, user`
+Can from a sqlite3 database or a text file generate ssh configs.
 
