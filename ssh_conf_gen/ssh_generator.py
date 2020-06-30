@@ -1,5 +1,5 @@
-from datetime import datetime
 import os
+from datetime import datetime
 
 
 class SshHost:
@@ -33,14 +33,18 @@ def _get_file_header():
 # Creation date: {timestamp}\n"""
 
 
-def write_ssh_config_file(ssh_hosts, dest_file, confirm=True):
+def write_ssh_config_file(ssh_hosts, dest_file, no_confirm=True):
     """Writes ssh hosts to supplied file
 
-    Set `confirm=False` to overwrite any already existing file"""
+    Set `no_confirm=True` to overwrite any already existing file"""
 
-    if confirm == False and os.path.exists(dest_file):
-        answer = input("Overwrite existing file? [y/N] ")
-        if not "y" in answer.strip().lower():
+    if not isinstance(ssh_hosts, list) or len(ssh_hosts) == 0:
+        raise ValueError("No SshHosts to write to file")
+
+    if not no_confirm and os.path.exists(dest_file):
+        answer = input("Overwrite existing file? [y/N] ").strip().lower()
+        if answer not in ["y", "yes"]:
+            print("Aborted")
             return
 
     with open(dest_file, "w+") as f:

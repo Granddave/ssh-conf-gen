@@ -1,15 +1,10 @@
 import sqlite3
-from sqlite3 import Error
 
 from .. import ssh_generator
 
 
 def _select_hosts(conn):
-    """Query all rows in the tasks table
-
-    :param conn: the Connection object
-    :return:
-    """
+    """Select hosts with supplied database connection"""
     cur = conn.cursor()
     cur.execute("SELECT host, hostname, port, user FROM hosts")
 
@@ -18,6 +13,7 @@ def _select_hosts(conn):
 
 
 def get_hosts(database_path):
+    """Get a list with ssh hosts from sqlite3 database with `database_path`"""
     ssh_hosts = []
     with sqlite3.connect(database_path) as conn:
         for row in _select_hosts(conn):
